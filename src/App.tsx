@@ -1,12 +1,14 @@
-import { Button } from "./components/ui/button";
+import { Outlet } from "react-router-dom";
+import Header from "./pages/misc/Header";
 
 function App() {
     return (
-        <>
-            <div>
-                <Button>Click me</Button>
-            </div>
-        </>
+        <div className="bg-background">
+            <Header />
+            <main>
+                <Outlet />
+            </main>
+        </div>
     );
 }
 
