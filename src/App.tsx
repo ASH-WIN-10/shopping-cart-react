@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "./pages/misc/Header";
+import { Toaster } from "sonner";
 
 function App() {
     return (
@@ -7,6 +8,7 @@ function App() {
             <Header />
             <main>
                 <Outlet />
+                <Toaster />
             </main>
         </div>
     );

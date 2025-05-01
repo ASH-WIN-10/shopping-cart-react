@@ -2,6 +2,16 @@ import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Product } from "./useFetchProducts";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+
+function AddToCartButton() {
+    function handleCartButton() {
+        toast.success("Added to cart");
+    }
+
+    return <Button onClick={handleCartButton}>Add to Cart</Button>;
+}
 
 function ProductCard({ product }: { product: Product }) {
     const [loading, setLoading] = useState(true);
@@ -27,7 +37,10 @@ function ProductCard({ product }: { product: Product }) {
                     <p className="line-clamp-1 text-lg" title={product.title}>
                         {product.title}
                     </p>
-                    <p className="text-xl font-bold">${product.price}</p>
+                    <div className="flex items-center justify-between">
+                        <p className="text-xl font-bold">${product.price}</p>
+                        <AddToCartButton />
+                    </div>
                 </CardFooter>
             </Card>
         );
@@ -43,10 +56,13 @@ function ProductCard({ product }: { product: Product }) {
                 />
             </CardHeader>
             <CardFooter className="block text-left">
-                <p className="line-clamp-1 text-lg" title={product.title}>
+                <p className="text-md line-clamp-1" title={product.title}>
                     {product.title}
                 </p>
-                <p className="text-xl font-bold">${product.price}</p>
+                <div className="mt-2 flex items-center justify-between">
+                    <p className="text-xl font-bold">${product.price}</p>
+                    <AddToCartButton />
+                </div>
             </CardFooter>
         </Card>
     );
