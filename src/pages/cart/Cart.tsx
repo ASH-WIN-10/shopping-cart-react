@@ -9,6 +9,13 @@ function Cart() {
             [Product[], React.Dispatch<React.SetStateAction<Product[]>>]
         >();
 
+    function handleRemoveItem(e: React.MouseEvent) {
+        const id = parseInt(
+            (e?.currentTarget as HTMLButtonElement).dataset.product_id!,
+        );
+        updateCartItems((prev) => prev.filter((item) => item.id !== id));
+    }
+
     if (cartItems.length === 0) {
         return (
             <div className="flex h-full items-center justify-center">
@@ -38,6 +45,8 @@ function Cart() {
                                 <Button
                                     className="cursor-pointer"
                                     variant="destructive"
+                                    data-product_id={item.id}
+                                    onClick={handleRemoveItem}
                                 >
                                     Remove
                                 </Button>
