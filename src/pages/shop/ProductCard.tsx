@@ -22,46 +22,34 @@ function ProductCard({ product }: { product: Product }) {
         img.onload = () => setLoading(false);
     }, [product.image]);
 
-    if (loading) {
-        return (
-            <Card className="cursor-pointer transition-transform duration-200 hover:scale-105">
-                <CardHeader>
+    return (
+        <Card className="cursor-pointer transition-transform duration-200 hover:scale-105">
+            <CardHeader>
+                {loading ? (
                     <div className="mx-auto flex h-64 w-56 items-center justify-center">
                         <LoaderCircle
                             size={64}
                             className="text-primary animate-spin"
                         />
                     </div>
-                </CardHeader>
-                <CardFooter className="block text-left">
-                    <p className="line-clamp-1 text-lg" title={product.title}>
+                ) : (
+                    <img
+                        src={product.image}
+                        alt={product.title}
+                        className="mx-auto h-64 w-56"
+                    />
+                )}
+            </CardHeader>
+            <CardFooter>
+                <div className="block text-left">
+                <div className="block w-full text-left">
+                    <p className="text-md line-clamp-1" title={product.title}>
                         {product.title}
                     </p>
-                    <div className="flex items-center justify-between">
+                    <div className="mt-2 flex items-center justify-between">
                         <p className="text-xl font-bold">${product.price}</p>
                         <AddToCartButton />
                     </div>
-                </CardFooter>
-            </Card>
-        );
-    }
-
-    return (
-        <Card className="cursor-pointer transition-transform duration-200 hover:scale-105">
-            <CardHeader>
-                <img
-                    src={product.image}
-                    alt={product.title}
-                    className="mx-auto h-64 w-56"
-                />
-            </CardHeader>
-            <CardFooter className="block text-left">
-                <p className="text-md line-clamp-1" title={product.title}>
-                    {product.title}
-                </p>
-                <div className="mt-2 flex items-center justify-between">
-                    <p className="text-xl font-bold">${product.price}</p>
-                    <AddToCartButton />
                 </div>
             </CardFooter>
         </Card>
