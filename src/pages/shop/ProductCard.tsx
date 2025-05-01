@@ -4,18 +4,53 @@ import { useEffect, useState } from "react";
 import { Product } from "./useFetchProducts";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { Link, useOutletContext } from "react-router-dom";
 
-function AddToCartButton() {
-    function handleCartButton() {
-        toast.success("Added to cart");
+function AddToCartButton({
+    productId,
+    products,
+}: {
+    productId: number;
+    products: Product[];
+}) {
+    const [cartItems, updateCartItems] =
+        useOutletContext<
+            [Product[], React.Dispatch<React.SetStateAction<Product[]>>]
+        >();
+
+    function getProduct(id: number): Product | undefined {
+        return products.find((product) => product.id === id);
     }
+
+    function handleCartButton() {
+        const product = getProduct(productId);
+
+        if (cartItems.some((item) => item.id === productId))
+            toast.error("Item already in cart");
+        else {
+            updateCartItems((prev) => [...prev, product!]);
+            toast.success("Item added to cart");
+        }
+    }
+
+    if (cartItems.some((item) => item.id === productId))
+        return (
+            <Button variant="outline">
+                <Link to="/cart">Go to Cart</Link>
+            </Button>
+        );
 
     return <Button onClick={handleCartButton}>Add to Cart</Button>;
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({
+    product,
+    products,
+}: {
+    product: Product;
+    products: Product[];
+}) {
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         const img = new Image();
         img.src = product.image;
@@ -41,14 +76,16 @@ function ProductCard({ product }: { product: Product }) {
                 )}
             </CardHeader>
             <CardFooter>
-                <div className="block text-left">
                 <div className="block w-full text-left">
                     <p className="text-md line-clamp-1" title={product.title}>
                         {product.title}
                     </p>
                     <div className="mt-2 flex items-center justify-between">
                         <p className="text-xl font-bold">${product.price}</p>
-                        <AddToCartButton />
+                        <AddToCartButton
+                            products={products}
+                            productId={product.id}
+                        />
                     </div>
                 </div>
             </CardFooter>

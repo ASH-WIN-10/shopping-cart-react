@@ -3,6 +3,7 @@ import App from "./App";
 import Home from "./pages/home/Home";
 import NotFound from "./pages/misc/NotFound";
 import Shop from "./pages/shop/Shop";
+import Cart from "./pages/cart/Cart";
 
 const routes: RouteObject[] = [
     {
@@ -17,6 +18,10 @@ const routes: RouteObject[] = [
             {
                 path: "shop",
                 element: <Shop />,
+            },
+            {
+                path: "cart",
+                element: <Cart />,
             },
         ],
     },

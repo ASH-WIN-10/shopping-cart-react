@@ -13,6 +13,9 @@ function Header() {
                     <li>
                         <NavItem to="/shop">Shop</NavItem>
                     </li>
+                    <li>
+                        <NavItem to="/cart">Cart</NavItem>
+                    </li>
                 </ul>
             </nav>
         </header>
