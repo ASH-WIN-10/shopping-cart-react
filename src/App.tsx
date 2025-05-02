@@ -8,7 +8,7 @@ function App() {
     const [cartItems, updateCartItems] = useState<Product[]>([]);
 
     return (
-        <div className="bg-background">
+        <div className="bg-background grid min-h-screen grid-rows-[auto_1fr]">
             <Header cartItemsLength={cartItems.length} />
             <main>
                 <Outlet context={[cartItems, updateCartItems]} />

@@ -28,8 +28,8 @@ function Cart() {
         <div className="container mx-auto flex flex-col gap-8 p-10">
             <div className="flex flex-col gap-4">
                 {cartItems.map((item) => (
-                    <Card className="p-4">
-                        <div className="flex gap-4">
+                    <Card className="p-4" key={item.id}>
+                        <div className="flex flex-wrap gap-4">
                             <img
                                 src={item.image}
                                 alt={item.title}
