@@ -9,7 +9,7 @@ function App() {
 
     return (
         <div className="bg-background">
-            <Header />
+            <Header cartItemsLength={cartItems.length} />
             <main>
                 <Outlet context={[cartItems, updateCartItems]} />
                 <Toaster />
