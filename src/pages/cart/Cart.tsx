@@ -62,7 +62,10 @@ function Cart() {
                 <div className="text-right text-2xl font-bold">
                     <span>Total: </span>
                     <span>
-                        ${cartItems.reduce((acc, item) => acc + item.price, 0)}
+                        $
+                        {cartItems
+                            .reduce((acc, item) => acc + item.price, 0)
+                            .toFixed(2)}
                     </span>
                 </div>
                 <div>
