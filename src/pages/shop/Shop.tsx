@@ -1,6 +1,7 @@
 import ProductCard from "./ProductCard";
 import { LoaderCircle } from "lucide-react";
 import useFetchProducts from "./useFetchProducts";
+import Error from "../misc/Error";
 
 function Shop() {
     const { products, loading, error } = useFetchProducts();
@@ -13,26 +14,22 @@ function Shop() {
         );
     }
 
-    if (error) {
+    if (error || products.length === 0) {
         console.error(error);
-        return <div>Sorry something went wrong &semi;&rbbrk;</div>;
+        return <Error />;
     }
 
     return (
         <div className="container mx-auto p-10">
-            {products.length === 0 ? (
-                <div>Sorry something went wrong &semi;&rbbrk;</div>
-            ) : (
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {products.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            products={products}
-                        />
-                    ))}
-                </div>
-            )}
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {products.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        products={products}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
