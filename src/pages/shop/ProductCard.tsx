@@ -5,6 +5,7 @@ import { Product } from "./useFetchProducts";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Link, useOutletContext } from "react-router-dom";
+import { ShopContext } from "./Shop";
 
 function AddToCartButton({
     productId,
@@ -13,16 +14,13 @@ function AddToCartButton({
     productId: number;
     products: Product[];
 }) {
-    const [cartItems, updateCartItems] =
-        useOutletContext<
-            [Product[], React.Dispatch<React.SetStateAction<Product[]>>]
-        >();
+    const [, { cartItems, updateCartItems }] = useOutletContext<ShopContext>();
 
     function getProduct(id: number): Product | undefined {
         return products.find((product) => product.id === id);
     }
 
-    function handleCartButton() {
+    function handleAddToCartButton() {
         const product = getProduct(productId);
 
         if (cartItems.some((item) => item.id === productId))
@@ -40,7 +38,7 @@ function AddToCartButton({
             </Button>
         );
 
-    return <Button onClick={handleCartButton}>Add to Cart</Button>;
+    return <Button onClick={handleAddToCartButton}>Add to Cart</Button>;
 }
 
 function ProductCard({

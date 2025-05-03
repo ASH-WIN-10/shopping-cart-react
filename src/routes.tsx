@@ -4,6 +4,8 @@ import Home from "./pages/home/Home";
 import NotFound from "./pages/misc/NotFound";
 import Shop from "./pages/shop/Shop";
 import Cart from "./pages/cart/Cart";
+import ProductPage from "./pages/shop/product/ProductPage";
+import Products from "./pages/shop/Products";
 
 const routes: RouteObject[] = [
     {
@@ -18,6 +20,16 @@ const routes: RouteObject[] = [
             {
                 path: "shop",
                 element: <Shop />,
+                children: [
+                    {
+                        index: true,
+                        element: <Products />,
+                    },
+                    {
+                        path: "product/:productId",
+                        element: <ProductPage />,
+                    },
+                ],
             },
             {
                 path: "cart",
