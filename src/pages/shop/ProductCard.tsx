@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Product } from "./useFetchProducts";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { ShopContext } from "./Shop";
 
 function AddToCartButton({
@@ -48,15 +48,30 @@ function ProductCard({
     product: Product;
     products: Product[];
 }) {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const img = new Image();
         img.src = product.image;
         img.onload = () => setLoading(false);
     }, [product.image]);
 
+    function goToProductPage(e: React.MouseEvent) {
+        if (
+            e.target instanceof HTMLButtonElement ||
+            e.target instanceof HTMLAnchorElement
+        )
+            return;
+
+        navigate(`/shop/product/${product.id}`);
+    }
+
     return (
-        <Card className="cursor-pointer transition-transform duration-200 hover:scale-105">
+        <Card
+            className="cursor-pointer transition-transform duration-200 hover:scale-105"
+            onClick={goToProductPage}
+        >
             <CardHeader>
                 {loading ? (
                     <div className="mx-auto flex h-64 w-56 items-center justify-center">
