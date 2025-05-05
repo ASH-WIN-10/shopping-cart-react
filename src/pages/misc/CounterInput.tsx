@@ -1,30 +1,71 @@
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
+import { Product } from "../shop/productsAPI";
 
 export default function CounterInput({
     min,
     max,
+    cartItems,
+    updateCartItems,
+    productId,
 }: {
     min: number;
     max: number;
+    cartItems: Product[];
+    updateCartItems: React.Dispatch<React.SetStateAction<Product[]>>;
+    productId: number;
 }) {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(min);
 
     const increment = () => {
         if (value >= max) return;
         setValue((prev) => prev + 1);
+
+        const product = cartItems.find((item) => item.id === productId);
+        if (product) {
+            updateCartItems((prev) =>
+                prev.map((item) =>
+                    item.id === productId
+                        ? { ...item, quantity: value + 1 }
+                        : item,
+                ),
+            );
+        } else {
+            updateCartItems((prev) => [
+                ...prev,
+                { ...product!, quantity: value + 1 },
+            ]);
+        }
     };
 
     const decrement = () => {
-        if (value <= min) return;
+        if (value <= 0) return;
         setValue((prev) => prev - 1);
+
+        const product = cartItems.find((item) => item.id === productId);
+
+        if (value === 1) {
+            updateCartItems((prev) =>
+                prev.filter((item) => item.id !== productId),
+            );
+        }
+
+        if (product) {
+            updateCartItems((prev) =>
+                prev.map((item) =>
+                    item.id === productId
+                        ? { ...item, quantity: value - 1 }
+                        : item,
+                ),
+            );
+        }
     };
 
     const handleChange = (e: React.ChangeEvent) => {
         const newValue = !e.target.ariaValueNow
-            ? 0
+            ? min
             : parseInt(e.target.ariaValueNow, 10);
-        setValue(isNaN(newValue) ? 0 : newValue);
+        setValue(isNaN(newValue) ? min : newValue);
     };
 
     return (

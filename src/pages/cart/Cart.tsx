@@ -2,6 +2,7 @@ import { useOutletContext } from "react-router-dom";
 import { Product } from "../shop/productsAPI";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import CounterInput from "@/pages/misc/CounterInput";
 
 function Cart() {
     const [cartItems, updateCartItems] =
@@ -35,13 +36,22 @@ function Cart() {
                                 alt={item.title}
                                 className="h-24 w-20"
                             />
+
                             <div className="flex flex-col justify-center">
                                 <span className="text-xl">{item.title}</span>
                                 <span className="text-xl font-bold">
                                     ${item.price}
                                 </span>
                             </div>
-                            <div className="ml-auto self-center">
+
+                            <div className="ml-auto flex gap-4 self-center">
+                                <CounterInput
+                                    min={1}
+                                    max={10}
+                                    cartItems={cartItems}
+                                    updateCartItems={updateCartItems}
+                                    productId={item.id}
+                                />
                                 <Button
                                     className="cursor-pointer"
                                     variant="destructive"
@@ -68,6 +78,7 @@ function Cart() {
                             .toFixed(2)}
                     </span>
                 </div>
+
                 <div>
                     <Button
                         className="mt-4 w-full cursor-pointer"
