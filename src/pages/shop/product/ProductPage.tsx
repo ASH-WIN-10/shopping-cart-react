@@ -3,9 +3,12 @@ import NotFound from "@/pages/misc/NotFound";
 import Error from "@/pages/misc/Error";
 import AddToCartButton from "../AddToCard";
 import { Button } from "@/components/ui/button";
+import { LoaderCircle, Star } from "lucide-react";
 import { useFetchProduct } from "../productsAPI";
+import { useEffect, useState } from "react";
 
 function ProductPage() {
+    const [imgLoading, setImgLoading] = useState(true);
     const params = useParams();
 
     if (params.productId === undefined) return <Error />;
@@ -14,18 +17,40 @@ function ProductPage() {
 
     const { product, loading, error } = useFetchProduct(productId);
 
+    useEffect(() => {
+        if (!product) return;
+        const img = new Image();
+        img.src = product.image;
+        img.onload = () => setImgLoading(false);
+    }, [product?.image]);
 
-    if (!product) return <Error />;
+    if (loading) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <LoaderCircle size={64} className="text-primary animate-spin" />
+            </div>
+        );
+    }
+    if (error || !product) return <Error />;
 
     return (
         <div className="container mx-auto flex flex-wrap items-center justify-center gap-5 p-10 md:flex-nowrap md:justify-normal lg:px-20">
             <div className="md:sticky md:top-10">
                 <div className="w-66 rounded-lg border-1 py-10">
-                    <img
-                        src={product.image}
-                        alt={product.title + " image"}
-                        className="mx-auto h-64 w-56"
-                    />
+                    {imgLoading ? (
+                        <div className="mx-auto flex h-64 w-56 items-center justify-center">
+                            <LoaderCircle
+                                size={64}
+                                className="text-primary animate-spin"
+                            />
+                        </div>
+                    ) : (
+                        <img
+                            src={product.image}
+                            alt={product.title + " image"}
+                            className="mx-auto h-64 w-56"
+                        />
+                    )}
                 </div>
 
                 <div className="mt-5 flex items-center justify-center gap-2">
