@@ -20,8 +20,8 @@ function ProductPage() {
     if (!product) return <Error />;
 
     return (
-        <div className="container mx-auto flex items-center gap-5 p-10 px-20">
-            <div className="sticky top-10">
+        <div className="container mx-auto flex flex-wrap items-center justify-center gap-5 p-10 md:flex-nowrap md:justify-normal lg:px-20">
+            <div className="md:sticky md:top-10">
                 <div className="w-66 rounded-lg border-1 py-10">
                     <img
                         src={product.image}
