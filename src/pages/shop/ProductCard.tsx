@@ -33,9 +33,9 @@ function AddToCartButton({
 
     if (cartItems.some((item) => item.id === productId))
         return (
-            <Button variant="outline">
-                <Link to="/cart">Go to Cart</Link>
-            </Button>
+            <Link to="/cart">
+                <Button variant="outline">Go to Cart</Button>
+            </Link>
         );
 
     return <Button onClick={handleAddToCartButton}>Add to Cart</Button>;
@@ -58,12 +58,7 @@ function ProductCard({
     }, [product.image]);
 
     function goToProductPage(e: React.MouseEvent) {
-        if (
-            e.target instanceof HTMLButtonElement ||
-            e.target instanceof HTMLAnchorElement
-        )
-            return;
-
+        if (e.target instanceof HTMLButtonElement) return;
         navigate(`/shop/product/${product.id}`);
     }
 
