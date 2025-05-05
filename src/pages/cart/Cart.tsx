@@ -51,6 +51,7 @@ function Cart() {
                                     cartItems={cartItems}
                                     updateCartItems={updateCartItems}
                                     productId={item.id}
+                                    productQuantity={item.quantity}
                                 />
                                 <Button
                                     className="cursor-pointer"

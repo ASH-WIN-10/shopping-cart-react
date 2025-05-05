@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
-import { Product } from "../shop/productsAPI";
+import { Product, useFetchProduct } from "../shop/productsAPI";
 
 export default function CounterInput({
     min,
@@ -8,21 +8,24 @@ export default function CounterInput({
     cartItems,
     updateCartItems,
     productId,
+    productQuantity = min,
 }: {
     min: number;
     max: number;
     cartItems: Product[];
     updateCartItems: React.Dispatch<React.SetStateAction<Product[]>>;
     productId: number;
+    productQuantity?: number;
 }) {
-    const [value, setValue] = useState(min);
+    const [value, setValue] = useState(productQuantity);
+    const { product } = useFetchProduct(productId);
 
     const increment = () => {
         if (value >= max) return;
         setValue((prev) => prev + 1);
 
-        const product = cartItems.find((item) => item.id === productId);
-        if (product) {
+        const item = cartItems.find((item) => item.id === productId);
+        if (item) {
             updateCartItems((prev) =>
                 prev.map((item) =>
                     item.id === productId
@@ -63,9 +66,9 @@ export default function CounterInput({
 
     const handleChange = (e: React.ChangeEvent) => {
         const newValue = !e.target.ariaValueNow
-            ? min
+            ? 0
             : parseInt(e.target.ariaValueNow, 10);
-        setValue(isNaN(newValue) ? min : newValue);
+        setValue(isNaN(newValue) ? 0 : newValue);
     };
 
     return (

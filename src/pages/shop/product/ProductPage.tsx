@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import NotFound from "@/pages/misc/NotFound";
 import Error from "@/pages/misc/Error";
 import AddToCartButton from "../AddToCard";
@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/button";
 import { LoaderCircle, Star } from "lucide-react";
 import { useFetchProduct } from "../productsAPI";
 import { useEffect, useState } from "react";
+import CounterInput from "@/pages/misc/CounterInput";
+import { ShopContext } from "../Shop";
 
 function ProductPage() {
+    const [cartItems, updateCartItems] = useOutletContext<ShopContext>();
     const [imgLoading, setImgLoading] = useState(true);
     const params = useParams();
 
@@ -53,9 +56,26 @@ function ProductPage() {
                     )}
                 </div>
 
-                <div className="mt-5 flex items-center justify-center gap-2">
-                    <AddToCartButton productId={product.id} />
-                    <Button variant="outline">Buy Now</Button>
+                <div className="mt-5 flex flex-col items-center justify-center gap-2">
+                    <div className="flex gap-2">
+                        <CounterInput
+                            min={0}
+                            max={10}
+                            cartItems={cartItems}
+                            updateCartItems={updateCartItems}
+                            productId={product.id}
+                            productQuantity={(() => {
+                                const item = cartItems.find(
+                                    (item) => item.id === product.id,
+                                );
+                                return item ? item.quantity : 0;
+                            })()}
+                        />
+                        <AddToCartButton productId={product.id} />
+                    </div>
+                    <div>
+                        <Button>Buy Now</Button>
+                    </div>
                 </div>
             </div>
 
