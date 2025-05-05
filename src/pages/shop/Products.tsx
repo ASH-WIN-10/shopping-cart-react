@@ -1,11 +1,10 @@
 import ProductCard from "./ProductCard";
 import { LoaderCircle } from "lucide-react";
 import Error from "../misc/Error";
-import { useOutletContext } from "react-router-dom";
-import { ShopContext } from "./Shop";
+import { useFetchProducts } from "./productsAPI";
 
 function Products() {
-    const [{ products, loading, error }] = useOutletContext<ShopContext>();
+    const { products, loading, error } = useFetchProducts();
 
     if (loading) {
         return (
@@ -24,11 +23,7 @@ function Products() {
         <div className="container mx-auto p-10">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {products.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        products={products}
-                    />
+                    <ProductCard key={product.id} product={product} />
                 ))}
             </div>
         </div>

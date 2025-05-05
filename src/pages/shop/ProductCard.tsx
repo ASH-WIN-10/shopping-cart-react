@@ -1,17 +1,11 @@
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Product } from "./useFetchProducts";
+import { Product } from "./productsAPI";
 import { useNavigate } from "react-router-dom";
 import AddToCartButton from "./AddToCard";
 
-function ProductCard({
-    product,
-    products,
-}: {
-    product: Product;
-    products: Product[];
-}) {
+function ProductCard({ product }: { product: Product }) {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
@@ -54,10 +48,7 @@ function ProductCard({
                     </p>
                     <div className="mt-2 flex items-center justify-between">
                         <p className="text-xl font-bold">${product.price}</p>
-                        <AddToCartButton
-                            products={products}
-                            productId={product.id}
-                        />
+                        <AddToCartButton productId={product.id} />
                     </div>
                 </div>
             </CardFooter>

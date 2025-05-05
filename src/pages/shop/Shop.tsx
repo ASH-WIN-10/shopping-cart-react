@@ -1,16 +1,9 @@
 import { Outlet, useOutletContext } from "react-router-dom";
-import useFetchProducts, { Product } from "./useFetchProducts";
+import { Product } from "./productsAPI";
 
 export type ShopContext = [
-    {
-        products: Product[];
-        loading: boolean;
-        error: string | null;
-    },
-    {
-        cartItems: Product[];
-        updateCartItems: React.Dispatch<React.SetStateAction<Product[]>>;
-    },
+    cartItems: Product[],
+    updateCartItems: React.Dispatch<React.SetStateAction<Product[]>>,
 ];
 
 function Shop() {
@@ -18,12 +11,8 @@ function Shop() {
         useOutletContext<
             [Product[], React.Dispatch<React.SetStateAction<Product[]>>]
         >();
-    const { products, loading, error } = useFetchProducts();
 
-    const context: ShopContext = [
-        { products, loading, error },
-        { cartItems, updateCartItems },
-    ];
+    const context: ShopContext = [cartItems, updateCartItems];
 
     return <Outlet context={context} />;
 }

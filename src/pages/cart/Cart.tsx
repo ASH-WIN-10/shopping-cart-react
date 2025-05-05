@@ -1,5 +1,5 @@
 import { useOutletContext } from "react-router-dom";
-import { Product } from "../shop/useFetchProducts";
+import { Product } from "../shop/productsAPI";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 

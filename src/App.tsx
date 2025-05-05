@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "./pages/misc/Header";
 import { Toaster } from "sonner";
-import { Product } from "./pages/shop/useFetchProducts";
+import { Product } from "./pages/shop/productsAPI";
 import { useState } from "react";
 
 function App() {

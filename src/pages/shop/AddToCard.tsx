@@ -1,29 +1,23 @@
 import { Link, useOutletContext } from "react-router-dom";
-import { Product } from "./useFetchProducts";
+import { useFetchProduct } from "./productsAPI";
 import { ShopContext } from "./Shop";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
-function AddToCartButton({
-    productId,
-    products,
-}: {
-    productId: number;
-    products: Product[];
-}) {
-    const [, { cartItems, updateCartItems }] = useOutletContext<ShopContext>();
-
-    function getProduct(id: number): Product | undefined {
-        return products.find((product) => product.id === id);
-    }
+function AddToCartButton({ productId }: { productId: number }) {
+    const [cartItems, updateCartItems] = useOutletContext<ShopContext>();
+    const { product } = useFetchProduct(productId);
 
     function handleAddToCartButton() {
-        const product = getProduct(productId);
+        if (!product) {
+            console.error("Product not found");
+            return;
+        }
 
         if (cartItems.some((item) => item.id === productId))
             toast.error("Item already in cart");
         else {
-            updateCartItems((prev) => [...prev, product!]);
+            updateCartItems((prev) => [...prev, product]);
             toast.success("Item added to cart");
         }
     }

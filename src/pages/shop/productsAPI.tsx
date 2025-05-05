@@ -34,4 +34,25 @@ function useFetchProducts() {
     return { products, loading, error };
 }
 
-export default useFetchProducts;
+function useFetchProduct(productId: number) {
+    const [product, setProduct] = useState<Product>();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetch(`https://fakestoreapi.com/products/${productId}`)
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw new Error("server error");
+                }
+                return response.json();
+            })
+            .then((data) => setProduct(data))
+            .catch((error) => setError(error.message))
+            .finally(() => setLoading(false));
+    }, []);
+
+    return { product, loading, error };
+}
+
+export { useFetchProducts, useFetchProduct };

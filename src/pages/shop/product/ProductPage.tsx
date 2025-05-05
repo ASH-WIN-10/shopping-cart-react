@@ -1,22 +1,20 @@
-import { useOutletContext, useParams } from "react-router-dom";
-import { ShopContext } from "../Shop";
+import { useParams } from "react-router-dom";
 import NotFound from "@/pages/misc/NotFound";
 import Error from "@/pages/misc/Error";
 import AddToCartButton from "../AddToCard";
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
+import { useFetchProduct } from "../productsAPI";
 
 function ProductPage() {
-    const [{ products }] = useOutletContext<ShopContext>();
     const params = useParams();
 
     if (params.productId === undefined) return <Error />;
-
     const productId = parseInt(params.productId, 10);
-    if (isNaN(productId) || productId <= 0 || productId > products.length)
-        return <NotFound />;
+    if (isNaN(productId) || productId <= 0) return <NotFound />;
 
-    const product = products.find((product) => product.id === productId);
+    const { product, loading, error } = useFetchProduct(productId);
+
+
     if (!product) return <Error />;
 
     return (
@@ -31,10 +29,7 @@ function ProductPage() {
                 </div>
 
                 <div className="mt-5 flex items-center justify-center gap-2">
-                    <AddToCartButton
-                        products={products}
-                        productId={product.id}
-                    />
+                    <AddToCartButton productId={product.id} />
                     <Button variant="outline">Buy Now</Button>
                 </div>
             </div>
