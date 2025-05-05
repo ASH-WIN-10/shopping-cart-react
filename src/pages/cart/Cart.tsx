@@ -3,6 +3,7 @@ import { Product } from "../shop/productsAPI";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import CounterInput from "@/pages/misc/CounterInput";
+import { Trash2 } from "lucide-react";
 
 function Cart() {
     const [cartItems, updateCartItems] =
@@ -53,13 +54,14 @@ function Cart() {
                                     productId={item.id}
                                     productQuantity={item.quantity}
                                 />
+
                                 <Button
                                     className="cursor-pointer"
                                     variant="destructive"
                                     data-product_id={item.id}
                                     onClick={handleRemoveItem}
                                 >
-                                    Remove
+                                    <Trash2 />
                                 </Button>
                             </div>
                         </div>

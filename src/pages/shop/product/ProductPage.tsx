@@ -73,8 +73,8 @@ function ProductPage() {
                         />
                         <AddToCartButton productId={product.id} />
                     </div>
-                    <div>
-                        <Button>Buy Now</Button>
+                    <div className="w-full">
+                        <Button className="w-full">Buy Now</Button>
                     </div>
                 </div>
             </div>
