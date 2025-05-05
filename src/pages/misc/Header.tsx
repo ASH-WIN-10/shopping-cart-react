@@ -51,7 +51,7 @@ function NavItem({
                         isActive && "bg-secondary/25",
                     )}
                 >
-                    {isIcon && (
+                    {isIcon && (itemsLength || 0) > 0 && (
                         <div className="absolute top-4 right-5 grid size-5 place-items-center rounded-full bg-red-600 text-xs">
                             {itemsLength}
                         </div>
