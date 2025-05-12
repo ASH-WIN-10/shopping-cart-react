@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { Product, useFetchProduct } from "../shop/productsAPI";
 
@@ -19,6 +19,15 @@ export default function CounterInput({
 }) {
     const [value, setValue] = useState(productQuantity);
     const { product } = useFetchProduct(productId);
+
+    useEffect(() => {
+        const item = cartItems.find((item) => item.id === productId);
+        if (item) {
+            setValue(item.quantity || min);
+        } else {
+            setValue(min);
+        }
+    }, [cartItems, productId, min]);
 
     const increment = () => {
         if (value >= max) return;

@@ -17,6 +17,7 @@ function AddToCartButton({ productId }: { productId: number }) {
         if (cartItems.some((item) => item.id === productId))
             toast.error("Item already in cart");
         else {
+            product.quantity = 1;
             updateCartItems((prev) => [...prev, product]);
             toast.success("Item added to cart");
         }
