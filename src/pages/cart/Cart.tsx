@@ -77,7 +77,11 @@ function Cart() {
                     <span>
                         $
                         {cartItems
-                            .reduce((acc, item) => acc + item.price, 0)
+                            .reduce(
+                                (acc, item) =>
+                                    acc + item.price * (item.quantity || 0),
+                                0,
+                            )
                             .toFixed(2)}
                     </span>
                 </div>
